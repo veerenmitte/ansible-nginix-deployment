@@ -1,0 +1,21 @@
+- name: Configure Target Server
+  hosts: web
+  become: true
+
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Start nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Create custom HTML page
+      copy:
+        content: "<h1>Deployed using Ansible</h1>"
+        dest: /var/www/html/index.html
